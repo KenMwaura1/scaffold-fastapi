@@ -40,13 +40,13 @@ docker run --rm -it ghcr.io/kenmwaura1/scaffold-fastapi:latest --help
 
 ```bash
 # Basic usage
-scaffold-fastapi create my-project --db=postgresql --broker=redis --stack=full
+scaffold-fastapi my-project --db=postgresql --broker=redis --stack=full
 
 # Interactive mode (will prompt for missing options)
-scaffold-fastapi create my-project
+scaffold-fastapi my-project
 
 # Using Docker with volume mount to create project in current directory
-docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffold-fastapi:latest create my-project
+docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffold-fastapi:latest my-project
 ```
 
 ### Command Options
@@ -133,7 +133,7 @@ The Docker image is published to GitHub Container Registry and can be used as fo
 docker pull ghcr.io/kenmwaura1/scaffold-fastapi:latest
 
 # Create a new project
-docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffold-fastapi:latest create my-project
+docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffold-fastapi:latest my-project
 ```
 
 ## Contributing

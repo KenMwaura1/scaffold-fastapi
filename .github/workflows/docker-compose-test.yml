@@ -35,7 +35,7 @@ jobs:
       - name: Generate test project
         run: |
           mkdir -p test-project
-          scaffold-fastapi create test-project --db=postgresql --broker=redis --stack=minimal
+          scaffold-fastapi test-project --db=postgresql --broker=redis --stack=minimal
       
       - name: Validate docker-compose.yml
         run: |
