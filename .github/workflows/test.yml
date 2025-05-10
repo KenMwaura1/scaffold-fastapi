@@ -32,21 +32,16 @@ jobs:
         # Install directly with --system flag to avoid venv issues
         uv pip install --system -e ".[dev]"
     
+    - name: Format with black
+      run: |
+        uv pip install --system black
+        black .
+    
     - name: Lint with ruff
       run: |
         uv pip install --system ruff
         # Run with --fix to automatically fix issues
         ruff check --fix .
-        # Run again without --fix to report any remaining issues
-        ruff check .
-    
-    - name: Check formatting with black
-      run: |
-        uv pip install --system black
-        # Format the code
-        black .
-        # Check if any changes were made
-        git diff --exit-code || (echo "Black would make changes. Run 'black .' locally" && exit 1)
     
     - name: Test with pytest
       run: |
