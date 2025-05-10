@@ -13,6 +13,8 @@
 
 A command-line tool to generate FastAPI project scaffolds with various database, message broker, and deployment options.
 
+### **Read the full article on [DEV](hhttps://dev.to/ken_mwaura1/crushing-the-command-line-how-i-used-amazon-q-to-build-a-smarter-fastapi-scaffolder-3c45).**
+
 ## Features
 
 - **Database Support**: PostgreSQL, MongoDB, SQLite
