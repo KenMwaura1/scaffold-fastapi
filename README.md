@@ -4,12 +4,12 @@
 [![Docker Compose Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml)
 [![Publish to GHCR](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml)
 [![Publish to PyPI](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/pypi-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/pypi-publish.yml)
-[![PyPI version](https://badge.fury.io/py/sc affold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
+[![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub issues](https://img.shields.io/github/issues/KenMwaura1/scaffold-fastapi.svg)](https://github.com/KenMwaura1/scaffold-fastapi/issues)
 
-![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/Crushing%20the%20Command%20Line%3A%20How%20I%20Used%20Amazon%20Q%20to%20Build%20a%20Smarter%20FastAPI%20Scaffolder.png)
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](https://github.com/KenMwaura1/scaffold-fastapi/raw/main/media/Crushing%20the%20Command%20Line%3A%20How%20I%20Used%20Amazon%20Q%20to%20Build%20a%20Smarter%20FastAPI%20Scaffolder.png)
 
 A command-line tool to generate FastAPI project scaffolds with various database, message broker, and deployment options.
 
