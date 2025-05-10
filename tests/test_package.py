@@ -1,6 +1,7 @@
 """
 Tests for the package structure and metadata.
 """
+
 import importlib.metadata
 import importlib.util
 import os
@@ -12,12 +13,14 @@ import pytest
 def test_package_importable():
     """Test that the package can be imported."""
     import scaffold_fastapi
+
     assert scaffold_fastapi.__version__ is not None
 
 
 def test_generators_importable():
     """Test that the generators module can be imported."""
     from scaffold_fastapi import generators
+
     assert generators.generate_app_files is not None
     assert generators.generate_celery_tasks is not None
     assert generators.generate_docker_files is not None
@@ -28,6 +31,7 @@ def test_generators_importable():
 def test_cli_importable():
     """Test that the CLI module can be imported."""
     from scaffold_fastapi import cli
+
     assert cli.app is not None
     assert cli.validate_option is not None
     assert cli.create_project_structure is not None
