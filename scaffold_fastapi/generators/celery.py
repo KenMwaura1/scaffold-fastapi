@@ -1,7 +1,7 @@
 """
 Generator for Celery task files.
 """
-import os
+
 from pathlib import Path
 
 
@@ -11,7 +11,7 @@ def generate_celery_tasks(project_path: Path, broker: str):
     celery_app_path = project_path / "tasks" / "celery_app.py"
     with open(celery_app_path, "w") as f:
         f.write(_get_celery_app_content(broker))
-    
+
     # Create sample task file
     sample_task_path = project_path / "tasks" / "sample_tasks.py"
     with open(sample_task_path, "w") as f:
@@ -22,9 +22,9 @@ def _get_celery_app_content(broker: str) -> str:
     """Get content for celery_app.py file."""
     broker_url = {
         "redis": "redis://redis:6379/0",
-        "rabbitmq": "amqp://guest:guest@rabbitmq:5672//"
+        "rabbitmq": "amqp://guest:guest@rabbitmq:5672//",
     }[broker]
-    
+
     return f'''"""
 Celery application configuration.
 """

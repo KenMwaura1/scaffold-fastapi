@@ -16,6 +16,14 @@ import typer
 from rich.console import Console
 from rich.prompt import Confirm, Prompt
 
+from scaffold_fastapi.generators import (
+    generate_app_files,
+    generate_celery_tasks,
+    generate_docker_files,
+    generate_env_files,
+    generate_terraform_files,
+)
+
 app = typer.Typer(help="FastAPI Project Scaffolder CLI")
 console = Console()
 
@@ -184,14 +192,6 @@ def create(
     create_project_structure(project_path)
 
     # Generate project files based on selected options
-    from scaffold_fastapi.generators import (
-        generate_app_files,
-        generate_celery_tasks,
-        generate_docker_files,
-        generate_env_files,
-        generate_terraform_files,
-    )
-
     generate_app_files(project_path, db, broker, stack)
     generate_celery_tasks(project_path, broker)
     generate_docker_files(project_path, db, broker, stack)

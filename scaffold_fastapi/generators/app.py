@@ -1,50 +1,51 @@
 """
 Generator for FastAPI application files.
 """
+
 from pathlib import Path
 
 
 def generate_app_files(project_path: Path, db: str, broker: str, stack: str):
     """Generate FastAPI application files."""
     app_dir = project_path / "app"
-    
+
     # Create main.py
     main_py_path = app_dir / "main.py"
     with open(main_py_path, "w") as f:
         f.write(_get_main_py_content())
-    
+
     # Create core files
     core_dir = app_dir / "core"
-    
+
     # Create config.py
     config_py_path = core_dir / "config.py"
     with open(config_py_path, "w") as f:
         f.write(_get_config_py_content(db, broker))
-    
+
     # Create database.py
     db_py_path = app_dir / "db" / "database.py"
     with open(db_py_path, "w") as f:
         f.write(_get_database_py_content(db))
-    
+
     # Create models
     models_dir = app_dir / "models"
     base_model_path = models_dir / "base.py"
     with open(base_model_path, "w") as f:
         f.write(_get_base_model_content(db))
-    
+
     # Create API router
     api_dir = app_dir / "api"
     api_init_path = api_dir / "__init__.py"
     with open(api_init_path, "w") as f:
         f.write(_get_api_init_content())
-    
+
     # Create v1 API router
     v1_dir = api_dir / "v1"
     v1_dir.mkdir(exist_ok=True)
     v1_init_path = v1_dir / "__init__.py"
     with open(v1_init_path, "w") as f:
         f.write(_get_v1_init_content())
-    
+
     # Create health endpoint
     health_path = v1_dir / "health.py"
     with open(health_path, "w") as f:
@@ -131,12 +132,12 @@ def _get_config_py_content(db: str, broker: str) -> str:
         "mongodb": "mongodb://mongo:mongo@mongodb:27017/app",
         "sqlite": "sqlite+aiosqlite:///./app.db",
     }[db]
-    
+
     broker_url = {
         "redis": "redis://redis:6379/0",
         "rabbitmq": "amqp://guest:guest@rabbitmq:5672//",
     }[broker]
-    
+
     return f'''"""
 Application configuration settings.
 """
