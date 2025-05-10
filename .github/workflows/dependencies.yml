@@ -24,18 +24,20 @@ jobs:
     
     - name: Update dependencies
       run: |
-        # Create a virtual environment
-        uv venv
-        source .venv/bin/activate
+        # Create a virtual environment with explicit path
+        uv venv .venv
+        
+        # Use uv directly with --python pointing to the venv
+        VENV_PYTHON="$(pwd)/.venv/bin/python"
         
         # Install current dependencies
-        uv pip install -e ".[dev]"
+        uv pip install --python $VENV_PYTHON -e ".[dev]"
         
         # Check for updates and apply them
-        uv pip compile pyproject.toml --upgrade
+        uv pip compile --python $VENV_PYTHON pyproject.toml --upgrade
         
         # Generate updated requirements.txt
-        uv pip freeze > requirements.txt
+        uv pip freeze --python $VENV_PYTHON > requirements.txt
     
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
