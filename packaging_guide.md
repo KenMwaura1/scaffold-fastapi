@@ -5,11 +5,13 @@ This guide explains how to package and publish the scaffold-fastapi project to P
 ## Prerequisites
 
 1. Install uv:
+
 ```bash
 pip install uv
 ```
 
 2. Install build tools:
+
 ```bash
 uv pip install build twine
 ```
@@ -17,12 +19,14 @@ uv pip install build twine
 ## Building the Package
 
 1. Create and activate a virtual environment:
+
 ```bash
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 2. Build the package:
+
 ```bash
 python -m build
 ```
@@ -51,6 +55,7 @@ scaffold-fastapi --help
    - Create a new token with scope "Entire account" or limited to this project
 
 3. Configure your credentials:
+
 ```bash
 # Create or edit ~/.pypirc
 [pypi]
@@ -59,11 +64,13 @@ password = pypi-your-token-here
 ```
 
 4. Upload to PyPI:
+
 ```bash
 twine upload dist/*
 ```
 
 5. Alternatively, you can use uv to upload:
+
 ```bash
 uv pip publish
 ```
@@ -74,10 +81,13 @@ When you make changes and want to release a new version:
 
 1. Update the version number in `pyproject.toml`
 2. Rebuild the package:
+
 ```bash
 python -m build
 ```
+
 3. Upload the new version:
+
 ```bash
 twine upload dist/*
 ```
