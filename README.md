@@ -4,7 +4,7 @@
 [![Docker Compose Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml)
 [![Publish to GHCR](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml)
 [![Publish to PyPI](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/pypi-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/pypi-publish.yml)
-[![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
+[![PyPI version](https://badge.fury.io/py/sc affold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub issues](https://img.shields.io/github/issues/KenMwaura1/scaffold-fastapi.svg)](https://github.com/KenMwaura1/scaffold-fastapi/issues)
