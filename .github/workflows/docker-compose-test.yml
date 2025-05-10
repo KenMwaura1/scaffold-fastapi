@@ -38,17 +38,17 @@ jobs:
       
       - name: Generate test project
         run: |
-          scaffold-fastapi create test-project --db=postgresql --broker=redis --stack=minimal --yes
+          scaffold-fastapi test-project --db=postgresql --broker=redis --stack=minimal --yes
       
       - name: Validate docker-compose.yml
         run: |
           cd test-project
-          docker-compose config
+          docker compose config
       
       - name: Start Docker containers
         run: |
           cd test-project
-          docker-compose up -d
+          docker compose up -d
       
       - name: Wait for services to be ready
         run: |
@@ -57,7 +57,7 @@ jobs:
           timeout=30
           elapsed=0
           while [ $elapsed -lt $timeout ]; do
-            if docker-compose ps | grep -q "Up"; then
+            if docker compose ps | grep -q "Up"; then
               echo "Services are up and running"
               break
             fi
@@ -67,18 +67,18 @@ jobs:
           
           if [ $elapsed -ge $timeout ]; then
             echo "Timeout waiting for services to start"
-            docker-compose logs
+            docker compose logs
             exit 1
           fi
       
       - name: Check service health
         run: |
           cd test-project
-          docker-compose ps
-          docker-compose logs
+          docker compose ps
+          docker compose logs
       
       - name: Cleanup Docker resources
         run: |
           cd test-project
-          docker-compose down
+          docker compose down
         if: always()  # Run even if previous steps fail
