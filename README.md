@@ -1,5 +1,10 @@
 # FastAPI Project Scaffolder
 
+[![Test](https://github.com/yourusername/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/yourusername/scaffold-fastapi/actions/workflows/test.yml)
+[![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
+[![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A command-line tool to generate FastAPI project scaffolds with various database, message broker, and deployment options.
 
 ## Features
@@ -13,12 +18,11 @@ A command-line tool to generate FastAPI project scaffolds with various database,
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/scaffold-fastapi.git
-cd scaffold-fastapi
+# Install from PyPI
+pip install scaffold-fastapi
 
-# Install the package
-pip install -e .
+# Or using uv
+uv pip install scaffold-fastapi
 ```
 
 ## Usage
@@ -69,6 +73,10 @@ my-project/
 ## Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/scaffold-fastapi.git
+cd scaffold-fastapi
+
 # Install development dependencies
 pip install -e ".[dev]"
 
@@ -79,6 +87,24 @@ pytest
 black .
 isort .
 ```
+
+## CI/CD
+
+This project uses GitHub Actions for:
+
+- **Testing**: Runs tests on Python 3.9, 3.10, and 3.11 for both main and dev branches
+- **Publishing**: Automatically publishes to PyPI when pushing to main or creating a tag
+- **Dependencies**: Weekly checks and updates dependencies using uv
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
