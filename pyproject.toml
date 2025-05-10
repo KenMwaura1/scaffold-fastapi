@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "scaffold-fastapi"
-version = "0.1.3"
+version = "0.1.5"
 description = "FastAPI project scaffolder CLI tool"
 readme = "README.md"
 authors = [
