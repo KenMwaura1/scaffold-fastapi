@@ -2,7 +2,6 @@
 Generator for Celery task files.
 """
 
-import os
 from pathlib import Path
 
 

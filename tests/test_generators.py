@@ -2,8 +2,6 @@
 Tests for the generator modules.
 """
 
-import os
-from pathlib import Path
 
 import pytest
 
@@ -11,8 +9,8 @@ from scaffold_fastapi.generators import (
     generate_app_files,
     generate_celery_tasks,
     generate_docker_files,
-    generate_terraform_files,
     generate_env_files,
+    generate_terraform_files,
 )
 
 

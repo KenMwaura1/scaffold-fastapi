@@ -6,22 +6,22 @@ A command-line tool to generate FastAPI project scaffolds with various database,
 message broker, and deployment options.
 """
 import os
-import sys
 import shutil
 import subprocess
+import sys
 from pathlib import Path
-from typing import Optional, List
+from typing import List, Optional
 
 import typer
 from rich.console import Console
-from rich.prompt import Prompt, Confirm
+from rich.prompt import Confirm, Prompt
 
 from scaffold_fastapi.generators import (
     generate_app_files,
     generate_celery_tasks,
     generate_docker_files,
-    generate_terraform_files,
     generate_env_files,
+    generate_terraform_files,
 )
 
 app = typer.Typer(help="FastAPI Project Scaffolder CLI")
@@ -203,12 +203,12 @@ def create(
     install_dependencies(project_path, db, broker, stack)
 
     console.print("\n[bold green]Project created successfully![/]")
-    console.print(f"To get started, run:\n")
+    console.print("To get started, run:\n")
     console.print(f"  cd {name}")
     console.print(
-        f"  source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate"
+        "  source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate"
     )
-    console.print(f"  uvicorn app.main:app --reload")
+    console.print("  uvicorn app.main:app --reload")
 
 
 if __name__ == "__main__":
