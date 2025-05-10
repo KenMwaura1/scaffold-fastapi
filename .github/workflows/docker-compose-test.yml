@@ -1,0 +1,81 @@
+name: Docker Compose Test
+
+on:
+  push:
+    branches: [ main, dev ]
+    paths:
+      - 'scaffold_fastapi/generators/docker.py'
+      - '.github/workflows/docker-compose-test.yml'
+  pull_request:
+    branches: [ main, dev ]
+    paths:
+      - 'scaffold_fastapi/generators/docker.py'
+      - '.github/workflows/docker-compose-test.yml'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  test-docker-compose:
+    name: Test Docker Compose Generation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      
+      - name: Generate test project
+        run: |
+          mkdir -p test-project
+          scaffold-fastapi create test-project --db=postgresql --broker=redis --stack=minimal
+      
+      - name: Validate docker-compose.yml
+        run: |
+          cd test-project
+          docker-compose config
+      
+      - name: Start containers
+        run: |
+          cd test-project
+          docker-compose up -d
+      
+      - name: Wait for services to be ready
+        run: |
+          cd test-project
+          # Wait for up to 30 seconds for services to be ready
+          timeout=30
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            if docker-compose ps | grep -q "Up"; then
+              echo "Services are up and running"
+              break
+            fi
+            sleep 1
+            elapsed=$((elapsed+1))
+          done
+          
+          if [ $elapsed -ge $timeout ]; then
+            echo "Timeout waiting for services to start"
+            docker-compose logs
+            exit 1
+          fi
+      
+      - name: Check service health
+        run: |
+          cd test-project
+          docker-compose ps
+          docker-compose logs
+      
+      - name: Stop containers
+        run: |
+          cd test-project
+          docker-compose down
+        if: always()  # Run even if previous steps fail
