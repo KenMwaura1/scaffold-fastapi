@@ -1,6 +1,6 @@
 # FastAPI Project Scaffolder
 
-[![Test](https://github.com/yourusername/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/yourusername/scaffold-fastapi/actions/workflows/test.yml)
+[![Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml)
 [![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -94,7 +94,15 @@ This project uses GitHub Actions for:
 
 - **Testing**: Runs tests on Python 3.9, 3.10, and 3.11 for both main and dev branches
 - **Publishing**: Automatically publishes to PyPI when pushing to main or creating a tag
-- **Dependencies**: Weekly checks and updates dependencies using uv
+- **Dependencies**: Weekly checks and updates dependencies
+
+## Publishing to PyPI
+
+To publish this package to PyPI, you need to:
+
+1. Create a PyPI API token (see [pypi_instructions.md](pypi_instructions.md))
+2. Add the token to GitHub Secrets as `PYPI_API_TOKEN`
+3. Push to main or create a tag starting with `v` (e.g., `v0.1.0`)
 
 ## Contributing
 
