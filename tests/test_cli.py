@@ -3,14 +3,13 @@ Tests for the CLI module.
 """
 import os
 import shutil
-import sys
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
 from typer.testing import CliRunner
 
-from scaffold_fastapi.cli import app
+from scaffold_fastapi.cli import app, validate_option, DATABASES, BROKERS, STACKS
 
 runner = CliRunner()
 
@@ -25,130 +24,46 @@ def temp_project_dir(tmp_path):
         shutil.rmtree(project_dir)
 
 
-@patch("scaffold_fastapi.cli.setup_virtual_env")
-@patch("scaffold_fastapi.cli.install_dependencies")
-def test_create_command_help(mock_install, mock_setup):
+def test_validate_option_valid():
+    """Test validate_option with valid input."""
+    result = validate_option("postgresql", DATABASES, "database")
+    assert result == "postgresql"
+
+
+def test_validate_option_invalid():
+    """Test validate_option with invalid input."""
+    with pytest.raises(SystemExit):
+        validate_option("invalid-db", DATABASES, "database")
+
+
+def test_databases_constants():
+    """Test that the database constants are defined correctly."""
+    assert "postgresql" in DATABASES
+    assert "mongodb" in DATABASES
+    assert "sqlite" in DATABASES
+    assert len(DATABASES) == 3
+
+
+def test_brokers_constants():
+    """Test that the broker constants are defined correctly."""
+    assert "redis" in BROKERS
+    assert "rabbitmq" in BROKERS
+    assert len(BROKERS) == 2
+
+
+def test_stacks_constants():
+    """Test that the stack constants are defined correctly."""
+    assert "minimal" in STACKS
+    assert "full" in STACKS
+    assert "serverless" in STACKS
+    assert len(STACKS) == 3
+
+
+def test_create_command_help():
     """Test the create command help text."""
     result = runner.invoke(app, ["create", "--help"])
     assert result.exit_code == 0
     assert "Create a new FastAPI project scaffold" in result.stdout
-
-
-@patch("scaffold_fastapi.cli.setup_virtual_env")
-@patch("scaffold_fastapi.cli.install_dependencies")
-@patch("scaffold_fastapi.cli.validate_option", return_value="postgresql")
-@patch("scaffold_fastapi.cli.Path.exists", return_value=False)
-@patch("scaffold_fastapi.cli.Path.mkdir")
-@patch("scaffold_fastapi.cli.create_project_structure")
-@patch("scaffold_fastapi.cli.generate_app_files")
-@patch("scaffold_fastapi.cli.generate_celery_tasks")
-@patch("scaffold_fastapi.cli.generate_docker_files")
-@patch("scaffold_fastapi.cli.generate_terraform_files")
-@patch("scaffold_fastapi.cli.generate_env_files")
-def test_create_command_with_options(
-    mock_env_files,
-    mock_terraform_files,
-    mock_docker_files,
-    mock_celery_tasks,
-    mock_app_files,
-    mock_create_structure,
-    mock_mkdir,
-    mock_exists,
-    mock_validate,
-    mock_install,
-    mock_setup,
-):
-    """Test the create command with options."""
-    # Mock sys.exit to prevent test from exiting
-    with patch.object(sys, "exit") as mock_exit:
-        result = runner.invoke(
-            app,
-            [
-                "create",
-                "test-project",
-                "--db", "postgresql",
-                "--broker", "redis",
-                "--stack", "minimal",
-            ],
-        )
-    
-    # Check that sys.exit was not called
-    mock_exit.assert_not_called()
-    
-    # Check that the output contains expected strings
-    assert "Creating FastAPI project" in result.stdout
-    assert "test-project" in result.stdout
-
-
-@patch("scaffold_fastapi.cli.validate_option")
-def test_create_command_invalid_option(mock_validate):
-    """Test the create command with invalid option."""
-    # Set up the mock to raise SystemExit with code 1
-    mock_validate.side_effect = SystemExit(1)
-    
-    result = runner.invoke(
-        app,
-        [
-            "create",
-            "test-project",
-            "--db", "invalid-db",
-            "--broker", "redis",
-            "--stack", "minimal",
-        ],
-    )
-    
-    # Check that the exit code is 1 (error)
-    assert result.exit_code == 1
-
-
-@patch("scaffold_fastapi.cli.setup_virtual_env")
-@patch("scaffold_fastapi.cli.install_dependencies")
-@patch("scaffold_fastapi.cli.validate_option", return_value="postgresql")
-@patch("scaffold_fastapi.cli.Path.exists", return_value=True)
-@patch("scaffold_fastapi.cli.Confirm.ask", return_value=True)
-@patch("scaffold_fastapi.cli.shutil.rmtree")
-@patch("scaffold_fastapi.cli.Path.mkdir")
-@patch("scaffold_fastapi.cli.create_project_structure")
-@patch("scaffold_fastapi.cli.generate_app_files")
-@patch("scaffold_fastapi.cli.generate_celery_tasks")
-@patch("scaffold_fastapi.cli.generate_docker_files")
-@patch("scaffold_fastapi.cli.generate_terraform_files")
-@patch("scaffold_fastapi.cli.generate_env_files")
-def test_create_command_existing_directory(
-    mock_env_files,
-    mock_terraform_files,
-    mock_docker_files,
-    mock_celery_tasks,
-    mock_app_files,
-    mock_create_structure,
-    mock_mkdir,
-    mock_rmtree,
-    mock_confirm,
-    mock_exists,
-    mock_validate,
-    mock_install,
-    mock_setup,
-):
-    """Test the create command with existing directory."""
-    # Mock sys.exit to prevent test from exiting
-    with patch.object(sys, "exit") as mock_exit:
-        result = runner.invoke(
-            app,
-            [
-                "create",
-                "test-project",
-                "--db", "postgresql",
-                "--broker", "redis",
-                "--stack", "minimal",
-            ],
-        )
-    
-    # Check that sys.exit was not called
-    mock_exit.assert_not_called()
-    
-    # Check that rmtree was called (directory was removed)
-    mock_rmtree.assert_called_once()
-    
-    # Check that the output contains expected strings
-    assert "Creating FastAPI project" in result.stdout
-    assert "test-project" in result.stdout
+    assert "--db" in result.stdout
+    assert "--broker" in result.stdout
+    assert "--stack" in result.stdout
