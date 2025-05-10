@@ -18,6 +18,10 @@ jobs:
     name: Test Docker Compose Generation
     runs-on: ubuntu-latest
     
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']  # Add the desired Python versions here
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,12 +29,18 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: ${{ matrix.python-version }}
       
       - name: Install scaffold-fastapi
         run: |
           python -m pip install --upgrade pip
+          pip install uv
           pip install -e .
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
       
       - name: Clean test directory
         run: |
