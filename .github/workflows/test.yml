@@ -29,21 +29,22 @@ jobs:
     
     - name: Install dependencies
       run: |
-        uv pip install -e ".[dev]"
+        # Install directly with --system flag to avoid venv issues
+        uv pip install --system -e ".[dev]"
     
     - name: Lint with ruff
       run: |
-        uv pip install ruff
+        uv pip install --system ruff
         ruff check .
     
     - name: Check formatting with black
       run: |
-        uv pip install black
+        uv pip install --system black
         black --check .
     
     - name: Test with pytest
       run: |
-        uv pip install pytest pytest-cov
+        uv pip install --system pytest pytest-cov
         pytest --cov=scaffold_fastapi tests/
     
     - name: Upload coverage to Codecov
