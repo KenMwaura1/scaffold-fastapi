@@ -1,0 +1,94 @@
+name: Docker Compose Test
+
+on:
+  push:
+    branches: [ main, dev ]
+    paths:
+      - 'scaffold_fastapi/generators/docker.py'
+      - '.github/workflows/docker-compose-test.yml'
+  pull_request:
+    branches: [ main, dev ]
+    paths:
+      - 'scaffold_fastapi/generators/docker.py'
+      - '.github/workflows/docker-compose-test.yml'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  test-docker-compose:
+    name: Test Docker Compose Generation
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']  # Add the desired Python versions here
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install scaffold-fastapi
+        run: |
+          python -m pip install --upgrade pip
+          pip install uv
+          pip install -e .
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+      
+      - name: Clean test directory
+        run: |
+          rm -rf test-project
+      
+      - name: Generate test project
+        run: |
+          scaffold-fastapi test-project --db=postgresql --broker=redis --stack=minimal --yes
+      
+      - name: Validate docker-compose.yml
+        run: |
+          cd test-project
+          docker compose config
+      
+      - name: Start Docker containers
+        run: |
+          cd test-project
+          docker compose up -d
+      
+      - name: Wait for services to be ready
+        run: |
+          cd test-project
+          # Wait for up to 30 seconds for services to be ready
+          timeout=30
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            if docker compose ps | grep -q "Up"; then
+              echo "Services are up and running"
+              break
+            fi
+            sleep 1
+            elapsed=$((elapsed+1))
+          done
+          
+          if [ $elapsed -ge $timeout ]; then
+            echo "Timeout waiting for services to start"
+            docker compose logs
+            exit 1
+          fi
+      
+      - name: Check service health
+        run: |
+          cd test-project
+          docker compose ps
+          docker compose logs
+      
+      - name: Cleanup Docker resources
+        run: |
+          cd test-project
+          docker compose down
+        if: always()  # Run even if previous steps fail

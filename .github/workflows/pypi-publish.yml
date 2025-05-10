@@ -8,30 +8,31 @@ on:
 
 jobs:
   deploy:
+    name: Build and Publish Python Package
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
     
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
     
-    - name: Install dependencies
+    - name: Install build tools
       run: |
-        pip install build twine
+        pip install build twine black
     
-    - name: Format with black
+    - name: Format code
       run: |
-        pip install black
         black .
     
     - name: Build package
       run: |
         python -m build
     
-    - name: Check package
+    - name: Validate package
       run: |
         twine check dist/*
     

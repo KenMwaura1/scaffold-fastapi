@@ -162,6 +162,9 @@ def create(
     stack: Optional[str] = typer.Option(
         None, help="Deployment stack: minimal, full, or serverless"
     ),
+    yes: bool = typer.Option(
+        False, "--yes", "-y", help="Skip confirmation prompts and use defaults"
+    ),
 ):
     """Create a new FastAPI project scaffold."""
     # Validate options or prompt for them
@@ -177,14 +180,17 @@ def create(
     # Create project directory
     project_path = Path(name)
     if project_path.exists():
-        overwrite = Confirm.ask(
-            f"Directory '{name}' already exists. Overwrite?", default=False
-        )
-        if overwrite:
+        if yes:
             shutil.rmtree(project_path)
         else:
-            console.print("Aborted.")
-            sys.exit(1)
+            overwrite = Confirm.ask(
+                f"Directory '{name}' already exists. Overwrite?", default=False
+            )
+            if overwrite:
+                shutil.rmtree(project_path)
+            else:
+                console.print("Aborted.")
+                sys.exit(1)
 
     project_path.mkdir()
 
@@ -203,10 +209,10 @@ def create(
     install_dependencies(project_path, db, broker, stack)
 
     console.print("\n[bold green]Project created successfully![/]")
-    console.print("To get started, run:\n")
+    console.print(f"To get started, run:\n")
     console.print(f"  cd {name}")
-    console.print("  source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate")
-    console.print("  uvicorn app.main:app --reload")
+    console.print(f"  source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate")
+    console.print(f"  uvicorn app.main:app --reload")
 
 
 if __name__ == "__main__":
