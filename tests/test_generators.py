@@ -2,7 +2,6 @@
 Tests for the generator modules.
 """
 
-
 import pytest
 
 from scaffold_fastapi.generators import (

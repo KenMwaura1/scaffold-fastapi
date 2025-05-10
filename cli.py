@@ -205,9 +205,7 @@ def create(
     console.print("\n[bold green]Project created successfully![/]")
     console.print("To get started, run:\n")
     console.print(f"  cd {name}")
-    console.print(
-        "  source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate"
-    )
+    console.print("  source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate")
     console.print("  uvicorn app.main:app --reload")
 
 
