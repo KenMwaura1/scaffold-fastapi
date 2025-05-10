@@ -1,6 +1,6 @@
 # FastAPI Project Scaffolder
 
-[![Test](https://github.com/yourusername/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/yourusername/scaffold-fastapi/actions/workflows/test.yml)
+[![Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml)
 [![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
