@@ -1,8 +1,9 @@
 # FastAPI Project Scaffolder
 
-[![Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml)
+[![Python Tests](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/python-test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/python-test.yml)
 [![Docker Compose Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml)
 [![Publish to GHCR](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml)
+[![Publish to PyPI](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/pypi-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/pypi-publish.yml)
 [![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -109,11 +110,11 @@ isort .
 
 This project uses GitHub Actions for:
 
-- **Testing**: Runs tests on Python 3.9, 3.10, and 3.11 for both main and dev branches
+- **Python Tests**: Runs tests on Python code, including formatting, linting, and unit tests
 - **Docker Compose Testing**: Validates and tests the generated Docker Compose files
 - **Container Publishing**: Builds and publishes Docker images to GitHub Container Registry
 - **PyPI Publishing**: Automatically publishes to PyPI when pushing to main or creating a tag
-- **Dependencies**: Weekly checks and updates dependencies
+- **Dependency Updates**: Weekly checks and updates dependencies
 
 ## Publishing to PyPI
 
