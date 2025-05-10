@@ -94,7 +94,15 @@ This project uses GitHub Actions for:
 
 - **Testing**: Runs tests on Python 3.9, 3.10, and 3.11 for both main and dev branches
 - **Publishing**: Automatically publishes to PyPI when pushing to main or creating a tag
-- **Dependencies**: Weekly checks and updates dependencies using uv
+- **Dependencies**: Weekly checks and updates dependencies
+
+## Publishing to PyPI
+
+To publish this package to PyPI, you need to:
+
+1. Create a PyPI API token (see [pypi_instructions.md](pypi_instructions.md))
+2. Add the token to GitHub Secrets as `PYPI_API_TOKEN`
+3. Push to main or create a tag starting with `v` (e.g., `v0.1.0`)
 
 ## Contributing
 
