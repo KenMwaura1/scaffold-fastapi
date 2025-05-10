@@ -1,6 +1,7 @@
 """
 Generator for Docker-related files.
 """
+
 import os
 from pathlib import Path
 
@@ -11,27 +12,27 @@ def generate_docker_files(project_path: Path, db: str, broker: str, stack: str):
     dockerfile_path = project_path / "Dockerfile"
     with open(dockerfile_path, "w") as f:
         f.write(_get_dockerfile_content())
-    
+
     # Create docker-compose.yml
     docker_compose_path = project_path / "docker-compose.yml"
     with open(docker_compose_path, "w") as f:
         f.write(_get_docker_compose_content(db, broker))
-    
+
     # Create docker directory files
     docker_dir = project_path / "infra" / "docker"
-    
+
     # Create docker-entrypoint.sh
     entrypoint_path = docker_dir / "docker-entrypoint.sh"
     with open(entrypoint_path, "w") as f:
         f.write(_get_docker_entrypoint_content())
-    
+
     # Make entrypoint executable
     os.chmod(entrypoint_path, 0o755)
 
 
 def _get_dockerfile_content() -> str:
     """Get content for Dockerfile."""
-    return '''# Multi-stage build for FastAPI application
+    return """# Multi-stage build for FastAPI application
 FROM python:3.11-slim AS builder
 
 WORKDIR /app
@@ -78,7 +79,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Default command
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-'''
+"""
 
 
 def _get_docker_compose_content(db: str, broker: str) -> str:
@@ -107,7 +108,7 @@ def _get_docker_compose_content(db: str, broker: str) -> str:
             "depends_on": [],
         },
     }
-    
+
     # Add database service
     if db == "postgresql":
         services["postgres"] = {
@@ -122,7 +123,7 @@ def _get_docker_compose_content(db: str, broker: str) -> str:
         }
         services["app"]["depends_on"].append("postgres")
         services["celery_worker"]["depends_on"].append("postgres")
-    
+
     elif db == "mongodb":
         services["mongodb"] = {
             "image": "mongo:6",
@@ -136,7 +137,7 @@ def _get_docker_compose_content(db: str, broker: str) -> str:
         }
         services["app"]["depends_on"].append("mongodb")
         services["celery_worker"]["depends_on"].append("mongodb")
-    
+
     # Add broker service
     if broker == "redis":
         services["redis"] = {
@@ -145,7 +146,7 @@ def _get_docker_compose_content(db: str, broker: str) -> str:
         }
         services["app"]["depends_on"].append("redis")
         services["celery_worker"]["depends_on"].append("redis")
-    
+
     elif broker == "rabbitmq":
         services["rabbitmq"] = {
             "image": "rabbitmq:3-management",
@@ -157,28 +158,29 @@ def _get_docker_compose_content(db: str, broker: str) -> str:
         }
         services["app"]["depends_on"].append("rabbitmq")
         services["celery_worker"]["depends_on"].append("rabbitmq")
-    
+
     # Build docker-compose.yml content
     volumes = {}
     if db == "postgresql":
         volumes["postgres_data"] = {"driver": "local"}
     elif db == "mongodb":
         volumes["mongodb_data"] = {"driver": "local"}
-    
+
     docker_compose = {
         "version": "3.8",
         "services": services,
         "volumes": volumes,
     }
-    
+
     # Convert to YAML format
     import yaml
+
     return yaml.dump(docker_compose, sort_keys=False)
 
 
 def _get_docker_entrypoint_content() -> str:
     """Get content for docker-entrypoint.sh."""
-    return '''#!/bin/sh
+    return """#!/bin/sh
 set -e
 
 # Function to wait for a service to be ready
@@ -240,4 +242,4 @@ fi
 
 # Execute the command
 exec "$@"
-'''
+"""

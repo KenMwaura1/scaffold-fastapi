@@ -1,6 +1,7 @@
 """
 Tests for the generator modules.
 """
+
 import os
 from pathlib import Path
 
@@ -20,7 +21,7 @@ def temp_project_dir(tmp_path):
     """Create a temporary directory for project generation."""
     project_dir = tmp_path / "test-project"
     project_dir.mkdir()
-    
+
     # Create required subdirectories
     (project_dir / "app").mkdir()
     (project_dir / "app" / "api").mkdir()
@@ -31,14 +32,14 @@ def temp_project_dir(tmp_path):
     (project_dir / "infra").mkdir()
     (project_dir / "infra" / "docker").mkdir()
     (project_dir / "infra" / "terraform").mkdir()
-    
+
     return project_dir
 
 
 def test_generate_app_files(temp_project_dir):
     """Test generating app files."""
     generate_app_files(temp_project_dir, "postgresql", "redis", "minimal")
-    
+
     # Check that files were created
     assert (temp_project_dir / "app" / "main.py").exists()
     assert (temp_project_dir / "app" / "core" / "config.py").exists()
@@ -52,11 +53,11 @@ def test_generate_app_files(temp_project_dir):
 def test_generate_celery_tasks(temp_project_dir):
     """Test generating Celery task files."""
     generate_celery_tasks(temp_project_dir, "redis")
-    
+
     # Check that files were created
     assert (temp_project_dir / "tasks" / "celery_app.py").exists()
     assert (temp_project_dir / "tasks" / "sample_tasks.py").exists()
-    
+
     # Check that Redis is configured
     with open(temp_project_dir / "tasks" / "celery_app.py") as f:
         content = f.read()
@@ -66,12 +67,12 @@ def test_generate_celery_tasks(temp_project_dir):
 def test_generate_docker_files(temp_project_dir):
     """Test generating Docker files."""
     generate_docker_files(temp_project_dir, "postgresql", "redis", "minimal")
-    
+
     # Check that files were created
     assert (temp_project_dir / "Dockerfile").exists()
     assert (temp_project_dir / "docker-compose.yml").exists()
     assert (temp_project_dir / "infra" / "docker" / "docker-entrypoint.sh").exists()
-    
+
     # Check that docker-compose.yml contains the right services
     with open(temp_project_dir / "docker-compose.yml") as f:
         content = f.read()
@@ -84,24 +85,30 @@ def test_generate_docker_files(temp_project_dir):
 def test_generate_terraform_files(temp_project_dir):
     """Test generating Terraform files."""
     generate_terraform_files(temp_project_dir, "full")
-    
+
     # Check that files were created
     assert (temp_project_dir / "infra" / "terraform" / "main.tf").exists()
     assert (temp_project_dir / "infra" / "terraform" / "variables.tf").exists()
     assert (temp_project_dir / "infra" / "terraform" / "outputs.tf").exists()
-    assert (temp_project_dir / "infra" / "terraform" / "modules" / "ecs" / "main.tf").exists()
-    assert (temp_project_dir / "infra" / "terraform" / "modules" / "ecs" / "variables.tf").exists()
-    assert (temp_project_dir / "infra" / "terraform" / "modules" / "ecs" / "outputs.tf").exists()
+    assert (
+        temp_project_dir / "infra" / "terraform" / "modules" / "ecs" / "main.tf"
+    ).exists()
+    assert (
+        temp_project_dir / "infra" / "terraform" / "modules" / "ecs" / "variables.tf"
+    ).exists()
+    assert (
+        temp_project_dir / "infra" / "terraform" / "modules" / "ecs" / "outputs.tf"
+    ).exists()
 
 
 def test_generate_env_files(temp_project_dir):
     """Test generating environment files."""
     generate_env_files(temp_project_dir, "postgresql", "redis")
-    
+
     # Check that files were created
     assert (temp_project_dir / ".env").exists()
     assert (temp_project_dir / ".env.example").exists()
-    
+
     # Check that .env contains the right variables
     with open(temp_project_dir / ".env") as f:
         content = f.read()

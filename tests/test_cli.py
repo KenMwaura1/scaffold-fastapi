@@ -1,6 +1,7 @@
 """
 Tests for the CLI module.
 """
+
 import os
 import shutil
 from pathlib import Path
@@ -44,12 +45,15 @@ def test_create_command_with_options(mock_install, mock_setup, temp_project_dir)
                 [
                     "create",
                     "test-project",
-                    "--db", "postgresql",
-                    "--broker", "redis",
-                    "--stack", "minimal",
+                    "--db",
+                    "postgresql",
+                    "--broker",
+                    "redis",
+                    "--stack",
+                    "minimal",
                 ],
             )
-    
+
     assert result.exit_code == 0
     assert "Creating FastAPI project" in result.stdout
     assert "Database: postgresql" in result.stdout
@@ -66,12 +70,15 @@ def test_create_command_invalid_option(mock_install, mock_setup):
         [
             "create",
             "test-project",
-            "--db", "invalid-db",
-            "--broker", "redis",
-            "--stack", "minimal",
+            "--db",
+            "invalid-db",
+            "--broker",
+            "redis",
+            "--stack",
+            "minimal",
         ],
     )
-    
+
     assert result.exit_code == 1
     assert "Invalid database" in result.stdout
 
@@ -79,11 +86,13 @@ def test_create_command_invalid_option(mock_install, mock_setup):
 @patch("scaffold_fastapi.cli.Confirm.ask", return_value=True)
 @patch("scaffold_fastapi.cli.setup_virtual_env")
 @patch("scaffold_fastapi.cli.install_dependencies")
-def test_create_command_existing_directory(mock_install, mock_setup, mock_confirm, temp_project_dir):
+def test_create_command_existing_directory(
+    mock_install, mock_setup, mock_confirm, temp_project_dir
+):
     """Test the create command with existing directory."""
     # Create the directory
     temp_project_dir.mkdir(parents=True, exist_ok=True)
-    
+
     with patch("scaffold_fastapi.cli.Path.exists", return_value=True):
         with patch("scaffold_fastapi.cli.shutil.rmtree"):
             result = runner.invoke(
@@ -91,11 +100,14 @@ def test_create_command_existing_directory(mock_install, mock_setup, mock_confir
                 [
                     "create",
                     str(temp_project_dir),
-                    "--db", "postgresql",
-                    "--broker", "redis",
-                    "--stack", "minimal",
+                    "--db",
+                    "postgresql",
+                    "--broker",
+                    "redis",
+                    "--stack",
+                    "minimal",
                 ],
             )
-    
+
     assert result.exit_code == 0
     assert "Creating FastAPI project" in result.stdout

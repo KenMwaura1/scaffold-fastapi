@@ -1,6 +1,7 @@
 """
 Generator for Terraform AWS ECS deployment files.
 """
+
 from pathlib import Path
 
 
@@ -8,37 +9,37 @@ def generate_terraform_files(project_path: Path, stack: str):
     """Generate Terraform files for AWS deployment."""
     if stack != "full" and stack != "serverless":
         return
-    
+
     terraform_dir = project_path / "infra" / "terraform"
-    
+
     # Create main.tf
     main_tf_path = terraform_dir / "main.tf"
     with open(main_tf_path, "w") as f:
         f.write(_get_main_tf_content())
-    
+
     # Create variables.tf
     variables_tf_path = terraform_dir / "variables.tf"
     with open(variables_tf_path, "w") as f:
         f.write(_get_variables_tf_content())
-    
+
     # Create outputs.tf
     outputs_tf_path = terraform_dir / "outputs.tf"
     with open(outputs_tf_path, "w") as f:
         f.write(_get_outputs_tf_content())
-    
+
     # Create modules directory and ECS module
     ecs_module_dir = terraform_dir / "modules" / "ecs"
     ecs_module_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Create ECS module files
     ecs_main_tf_path = ecs_module_dir / "main.tf"
     with open(ecs_main_tf_path, "w") as f:
         f.write(_get_ecs_main_tf_content())
-    
+
     ecs_variables_tf_path = ecs_module_dir / "variables.tf"
     with open(ecs_variables_tf_path, "w") as f:
         f.write(_get_ecs_variables_tf_content())
-    
+
     ecs_outputs_tf_path = ecs_module_dir / "outputs.tf"
     with open(ecs_outputs_tf_path, "w") as f:
         f.write(_get_ecs_outputs_tf_content())
@@ -46,7 +47,7 @@ def generate_terraform_files(project_path: Path, stack: str):
 
 def _get_main_tf_content() -> str:
     """Get content for main.tf."""
-    return '''terraform {
+    return """terraform {
   required_version = ">= 1.0.0"
   
   required_providers {
@@ -171,12 +172,12 @@ resource "aws_cloudwatch_log_group" "app_logs" {
     Name = "${var.project_name}-${var.environment}-logs"
   }
 }
-'''
+"""
 
 
 def _get_variables_tf_content() -> str:
     """Get content for variables.tf."""
-    return '''variable "project_name" {
+    return """variable "project_name" {
   description = "Name of the project"
   type        = string
   default     = "fastapi-app"
@@ -261,12 +262,12 @@ variable "celery_broker_url" {
   default     = ""
   sensitive   = true
 }
-'''
+"""
 
 
 def _get_outputs_tf_content() -> str:
     """Get content for outputs.tf."""
-    return '''output "vpc_id" {
+    return """output "vpc_id" {
   description = "ID of the VPC"
   value       = module.vpc.vpc_id
 }
@@ -295,12 +296,12 @@ output "ecs_service_name" {
   description = "Name of the ECS service"
   value       = module.ecs.service_name
 }
-'''
+"""
 
 
 def _get_ecs_main_tf_content() -> str:
     """Get content for ECS module main.tf."""
-    return '''# ECS Cluster
+    return """# ECS Cluster
 resource "aws_ecs_cluster" "main" {
   name = "${var.project_name}-${var.environment}"
   
@@ -573,12 +574,12 @@ resource "aws_ecs_service" "app" {
 
 # Get current AWS region
 data "aws_region" "current" {}
-'''
+"""
 
 
 def _get_ecs_variables_tf_content() -> str:
     """Get content for ECS module variables.tf."""
-    return '''variable "project_name" {
+    return """variable "project_name" {
   description = "Name of the project"
   type        = string
 }
@@ -649,12 +650,12 @@ variable "secrets" {
   }))
   default = []
 }
-'''
+"""
 
 
 def _get_ecs_outputs_tf_content() -> str:
     """Get content for ECS module outputs.tf."""
-    return '''output "cluster_name" {
+    return """output "cluster_name" {
   description = "Name of the ECS cluster"
   value       = aws_ecs_cluster.main.name
 }
@@ -683,4 +684,4 @@ output "target_group_arn" {
   description = "ARN of the target group"
   value       = aws_lb_target_group.app.arn
 }
-'''
+"""
