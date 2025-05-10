@@ -5,6 +5,10 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![GitHub issues](https://img.shields.io/github/issues/KenMwaura1/scaffold-fastapi.svg)](https://github.com/KenMwaura1/scaffold-fastapi/issues)
+
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/Crushing%20the%20Command%20Line%3A%20How%20I%20Used%20Amazon%20Q%20to%20Build%20a%20Smarter%20FastAPI%20Scaffolder.png)
+
 A command-line tool to generate FastAPI project scaffolds with various database, message broker, and deployment options.
 
 ## Features
@@ -25,6 +29,8 @@ pip install scaffold-fastapi
 uv pip install scaffold-fastapi
 ```
 
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-49.png)
+
 ## Usage
 
 ```bash
@@ -40,6 +46,8 @@ scaffold-fastapi create my-project
 - `--db`: Database type (postgresql, mongodb, sqlite)
 - `--broker`: Message broker (redis, rabbitmq)
 - `--stack`: Deployment stack (minimal, full, serverless)
+
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-48.png)
 
 ## Project Structure
 
@@ -69,7 +77,7 @@ my-project/
 ├── docker-compose.yml
 └── requirements.txt
 ```
-
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-51.png)
 ## Development
 
 ```bash
