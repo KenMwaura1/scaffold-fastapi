@@ -32,10 +32,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
       
+      - name: Clean test directory
+        run: |
+          rm -rf test-project
+      
       - name: Generate test project
         run: |
-          mkdir -p test-project
-          scaffold-fastapi test-project --db=postgresql --broker=redis --stack=minimal
+          scaffold-fastapi create test-project --db=postgresql --broker=redis --stack=minimal --yes
       
       - name: Validate docker-compose.yml
         run: |
