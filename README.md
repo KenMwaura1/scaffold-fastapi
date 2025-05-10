@@ -1,6 +1,8 @@
 # FastAPI Project Scaffolder
 
 [![Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/test.yml)
+[![Docker Compose Test](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/docker-compose-test.yml)
+[![Publish to GHCR](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml/badge.svg)](https://github.com/KenMwaura1/scaffold-fastapi/actions/workflows/ghcr-publish.yml)
 [![PyPI version](https://badge.fury.io/py/scaffold-fastapi.svg)](https://badge.fury.io/py/scaffold-fastapi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scaffold-fastapi.svg)](https://pypi.org/project/scaffold-fastapi/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -26,6 +28,9 @@ pip install scaffold-fastapi
 
 # Or using uv
 uv pip install scaffold-fastapi
+
+# Or using Docker
+docker run --rm -it ghcr.io/kenmwaura1/scaffold-fastapi:latest --help
 ```
 
 ![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-49.png)
@@ -38,6 +43,9 @@ scaffold-fastapi create my-project --db=postgresql --broker=redis --stack=full
 
 # Interactive mode (will prompt for missing options)
 scaffold-fastapi create my-project
+
+# Using Docker with volume mount to create project in current directory
+docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffold-fastapi:latest create my-project
 ```
 
 ### Command Options
@@ -83,7 +91,7 @@ my-project/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/scaffold-fastapi.git
+git clone https://github.com/KenMwaura1/scaffold-fastapi.git
 cd scaffold-fastapi
 
 # Install development dependencies
@@ -102,7 +110,9 @@ isort .
 This project uses GitHub Actions for:
 
 - **Testing**: Runs tests on Python 3.9, 3.10, and 3.11 for both main and dev branches
-- **Publishing**: Automatically publishes to PyPI when pushing to main or creating a tag
+- **Docker Compose Testing**: Validates and tests the generated Docker Compose files
+- **Container Publishing**: Builds and publishes Docker images to GitHub Container Registry
+- **PyPI Publishing**: Automatically publishes to PyPI when pushing to main or creating a tag
 - **Dependencies**: Weekly checks and updates dependencies
 
 ## Publishing to PyPI
@@ -112,6 +122,18 @@ To publish this package to PyPI, you need to:
 1. Create a PyPI API token (see [pypi_instructions.md](pypi_instructions.md))
 2. Add the token to GitHub Secrets as `PYPI_API_TOKEN`
 3. Push to main or create a tag starting with `v` (e.g., `v0.1.0`)
+
+## Using the Docker Image
+
+The Docker image is published to GitHub Container Registry and can be used as follows:
+
+```bash
+# Pull the latest image
+docker pull ghcr.io/kenmwaura1/scaffold-fastapi:latest
+
+# Create a new project
+docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffold-fastapi:latest create my-project
+```
 
 ## Contributing
 
