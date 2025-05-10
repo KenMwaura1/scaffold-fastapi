@@ -15,6 +15,8 @@ A command-line tool to generate FastAPI project scaffolds with various database,
 
 ### **Read the full article on [DEV](hhttps://dev.to/ken_mwaura1/crushing-the-command-line-how-i-used-amazon-q-to-build-a-smarter-fastapi-scaffolder-3c45).**
 
+Link to the pyPI package: [scaffold-fastapi](https://pypi.org/project/scaffold-fastapi/)
+
 ## Features
 
 - **Database Support**: PostgreSQL, MongoDB, SQLite
