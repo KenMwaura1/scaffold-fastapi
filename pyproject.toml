@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "FastAPI project scaffolder CLI tool"
 readme = "README.md"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Ken Mwaura", email = "kemwaura@gmail.com"}
 ]
 license = {text = "MIT"}
 classifiers = [
