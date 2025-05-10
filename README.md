@@ -15,6 +15,8 @@ A command-line tool to generate FastAPI project scaffolds with various database,
 
 ### **Read the full article on [DEV](hhttps://dev.to/ken_mwaura1/crushing-the-command-line-how-i-used-amazon-q-to-build-a-smarter-fastapi-scaffolder-3c45).**
 
+Link to the pyPI package: [scaffold-fastapi](https://pypi.org/project/scaffold-fastapi/)
+
 ## Features
 
 - **Database Support**: PostgreSQL, MongoDB, SQLite
@@ -36,7 +38,7 @@ uv pip install scaffold-fastapi
 docker run --rm -it ghcr.io/kenmwaura1/scaffold-fastapi:latest --help
 ```
 
-![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-49.png)
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](https://github.com/KenMwaura1/scaffold-fastapi/raw/main/media/2025-05-10_16-49.png)
 
 ## Usage
 
@@ -56,14 +58,14 @@ docker run --rm -it -v $(pwd):/workspace -w /workspace ghcr.io/kenmwaura1/scaffo
 - `--db`: Database type (postgresql, mongodb, sqlite)
 - `--broker`: Message broker (redis, rabbitmq)
 - `--stack`: Deployment stack (minimal, full, serverless)
-
-![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-48.png)
+  
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](https://github.com/KenMwaura1/scaffold-fastapi/raw/main/media/2025-05-10_16-48.png)
 
 ## Project Structure
 
 The generated project will have the following structure:
 
-```
+```shell
 my-project/
 ├── app/
 │   ├── api/
@@ -88,7 +90,7 @@ my-project/
 └── requirements.txt
 ```
 
-![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](media/2025-05-10_16-51.png)
+![Crushing the Command Line: How I Used Amazon Q to Build a Smarter FastAPI Scaffolder](https://github.com/KenMwaura1/scaffold-fastapi/raw/main/media/2025-05-10_16-51.png)
 
 ## Development
 
