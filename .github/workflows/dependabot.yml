@@ -13,5 +13,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      # Add a step to verify if the PR is from Dependabot
+      - name: Verify Dependabot PR
+        run: |
+          if [[ "${{ github.actor }}" != "dependabot[bot]" ]]; then
+            echo "PR is not from Dependabot, skipping.";
+            exit 0;
+          fi
+
       - name: Run Dependabot
         uses: dependabot/fetch-metadata@v1
