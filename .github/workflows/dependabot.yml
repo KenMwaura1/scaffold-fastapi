@@ -2,12 +2,7 @@ name: "Dependabot Updates"
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs daily at midnight UTC
-  # The pull_request trigger ensures that Dependabot updates are validated immediately
-  # when a pull request is opened or updated, complementing the daily scheduled runs.
-  pull_request:
-    branches:
-      - main # Adjust based on your default branch name
+    - cron: "0 0 * * 0" # Runs weekly at midnight UTC on Sundays
 
 jobs:
   dependabot:
@@ -16,13 +11,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Add a step to verify if the PR is from Dependabot
       - name: Verify Dependabot PR
-        run: |
-          if [[ "${{ github.actor }}" != "dependabot[bot]" ]]; then
-            echo "PR is not from Dependabot, skipping.";
-            exit 0;
-          fi
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        run: echo "PR is not from Dependabot, skipping."
 
-      - name: Run Dependabot
+      - name: Fetch Dependabot metadata
         uses: dependabot/fetch-metadata@v1
+        with:
+          alert-lookup: true
+          compat-lookup: true
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
