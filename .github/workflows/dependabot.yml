@@ -2,7 +2,7 @@ name: "Dependabot Updates"
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs daily at midnight UTC
+    - cron: "0 0 * * 0" # Runs weekly at midnight UTC on Sundays
 
 jobs:
   dependabot:
@@ -10,5 +10,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Run Dependabot
+
+      - name: Verify Dependabot PR
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        run: echo "PR is not from Dependabot, skipping."
+
+      - name: Fetch Dependabot metadata
         uses: dependabot/fetch-metadata@v1
+        with:
+          alert-lookup: true
+          compat-lookup: true
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
