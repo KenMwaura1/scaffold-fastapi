@@ -3,6 +3,9 @@ name: "Dependabot Updates"
 on:
   schedule:
     - cron: "0 0 * * *" # Runs daily at midnight UTC
+  pull_request:
+    branches:
+      - main # Adjust based on your default branch name
 
 jobs:
   dependabot:
